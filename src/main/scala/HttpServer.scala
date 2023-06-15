@@ -7,13 +7,14 @@ import akka.http.scaladsl.server.{Directives, Route}
 import scala.concurrent.ExecutionContextExecutor
 import scala.io.StdIn
 
+trait Service {
+  def route: Route = path("tutorials") {    Directives.get {      complete("all tutorials")    }  }
+}
 
-object HttpServer {
+object HttpServer extends Service {
 
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SprayExample")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
-
-  def route: Route = path("tutorials") {    Directives.get {      complete("all tutorials")    }  }
 
   def main(args: Array[String]): Unit = {
 
