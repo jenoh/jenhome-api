@@ -8,7 +8,11 @@ import scala.concurrent.ExecutionContextExecutor
 import scala.io.StdIn
 
 trait Service {
-  def route: Route = path("tutorials") {    Directives.get {      complete("all tutorials")    }  }
+  def route: Route = path("tutorials") {
+    Directives.get {
+      complete("all tutorials")
+    }
+  }
 }
 
 object HttpServer extends Service {
