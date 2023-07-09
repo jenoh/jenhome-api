@@ -1,28 +1,21 @@
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Directives.{complete, path}
-import akka.http.scaladsl.server.{Directives, Route}
+import models.Config
+import routes.LightsRoutes
+import services.LightsServices
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.io.StdIn
 
-trait Service {
-  def route: Route = path("tutorials") {
-    Directives.get {
-      complete("all tutorials")
-    }
-  }
-}
-
-object HttpServer extends Service {
+object HttpServer {
 
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SprayExample")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   def main(args: Array[String]): Unit = {
-
-    val bindingFuture = Http().newServerAt("localhost", 8080).bind(route)
+    val config = new Config(sys.env("url_bridge"),sys.env("token"))
+    val bindingFuture = Http().newServerAt("localhost", 8080).bind(new LightsRoutes(new LightsServices(config)).route)
     println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
     StdIn.readLine()
     bindingFuture
