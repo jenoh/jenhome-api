@@ -14,7 +14,7 @@ object HttpServer {
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   def main(args: Array[String]): Unit = {
-    val config = new Config(sys.env("url_bridge"),sys.env("token"))
+    val config = new Config(sys.env("url_bridge"), sys.env("token"))
     val bindingFuture = Http().newServerAt("localhost", 8080).bind(new LightsRoutes(new LightsServices(config)).route)
     println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
     StdIn.readLine()
