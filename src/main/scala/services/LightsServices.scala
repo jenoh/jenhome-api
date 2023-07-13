@@ -5,13 +5,13 @@ import models.Config
 
 class
 LightsServices(config: Config) {
-  def on: String = {
-    Put(config.getUrl + "/api/" + config.getToken + "/lights/1/" + "state", "on:true")
+  def on(id: String): String = {
+    Put(config.getUrl + "/api/" + config.getToken + "/lights/"+id+"/" + "state", "on:true")
     "Light on"
   }
 
-  def off: String = {
-    Put(config.getUrl + "/api/" + config.getToken + "/lights/1/" + "state", "on:false")
+  def off(id: String): String = {
+    Put(config.getUrl + "/api/" + config.getToken + "/lights/"+id+"/" + "state", "on:false")
     "Light off"
   }
 
