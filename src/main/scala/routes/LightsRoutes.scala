@@ -4,8 +4,6 @@ import akka.http.scaladsl.server.Directives.{complete, parameters, path, pathPre
 import akka.http.scaladsl.server.{Directives, Route}
 import services.LightsServices
 
-import javax.swing.text.Segment
-
 class LightsRoutes(lightsServices: LightsServices) {
   def route: Route = pathPrefix("lights") {
     Directives.concat(
